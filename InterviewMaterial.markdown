@@ -7,7 +7,13 @@
   - [3.2. 不定长滑动窗口](#32-不定长滑动窗口)
     - [3.2.1. 最长上升子数组](#321-最长上升子数组)
       - [3.2.1.1. 骑车路线原题🔗（最长上升子数组）](#3211-骑车路线原题最长上升子数组)
-    - [3.2.2. 1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](#322-1493-删掉一个元素以后全为-1-的最长子数组---力扣leetcode)
+    - [3.2.2. 一般的`最长的`长度](#322-一般的最长的长度)
+      - [3.2.2.1. 1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](#3221-1493-删掉一个元素以后全为-1-的最长子数组---力扣leetcode)
+      - [3.2.2.2. 最长彩带-内推鸭](#3222-最长彩带-内推鸭)
+      - [3.2.2.3. 904. 水果成篮 - 力扣（LeetCode）](#3223-904-水果成篮---力扣leetcode)
+      - [3.2.2.4. 1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）](#3224-1658-将-x-减到-0-的最小操作数---力扣leetcode)
+    - [3.2.3. 一般的`最短的`长度](#323-一般的最短的长度)
+      - [3.2.3.1. 209. 长度最小的子数组 - 力扣（LeetCode）](#3231-209-长度最小的子数组---力扣leetcode)
 
 依托于wiki，还有dchat的`我群`来准备面试话术和资料 争取能够打印出来
 
@@ -201,6 +207,109 @@ public class Main {
 
 #### 3.2.1.1. 骑车路线[原题🔗](https://www.sspnote.com/oj/3/318)[（最长上升子数组）](#321-最长上升子数组)
 
-### 3.2.2. [1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/description/)
+### 3.2.2. 一般的`最长的`长度
 
-找序列和为长度-1的最长串
+#### 3.2.2.1. [1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/description/)
+
+```java
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int res = 0, n = nums.length;
+        int sum = 0;
+        for (int r = 0,l=0; r < n; r++) {
+            sum += nums[r];
+            while (sum < r - l) {
+                sum -= nums[l++];
+            }
+            res = Math.max(res, r - l);
+        }
+
+        return res;
+    }
+}
+```
+
+找序列和为长度-1的`最长的`串
+
+#### 3.2.2.2. [最长彩带-内推鸭](https://www.sspnote.com/oj/3/337)
+
+```java
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Main {
+    private static final int N = 100000 + 10;
+    private static int[] a = new int[N];
+    private static int n, k;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        n = scanner.nextInt();
+        k = scanner.nextInt();
+
+        // 读取数组a的值
+        for (int i = 0; i < n; i++) {
+            a[i] = scanner.nextInt();
+        }
+
+        HashMap<Integer, Integer> cnts = new HashMap<>(); // 统计每一种彩带的个数
+        int res = 0;
+
+        // 使用滑动窗口寻找满足条件的最长子数组
+        for (int l = 0, r = 0; r < n; r++) {
+            cnts.put(a[r], cnts.getOrDefault(a[r], 0) + 1);
+
+            // 当前区间不满足条件
+            while (cnts.size() > k) {
+                cnts.put(a[l], cnts.get(a[l]) - 1);
+                if (cnts.get(a[l]) == 0) {
+                    cnts.remove(a[l]); // 删除key以确保哈希表的大小更新
+                }
+                l++;
+            }
+
+            res = Math.max(res, r - l + 1); // 更新最大长度
+        }
+
+        System.out.println(res);
+    }
+}
+```
+
+#### 3.2.2.3. <a href="https://leetcode.cn/problems/fruit-into-baskets/description/">904. 水果成篮 - 力扣（LeetCode）</a>
+
+#### 3.2.2.4. <a href="https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/">1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）</a>
+
+> 求一个`最长的`连续区间（因为要使得删除的元素最小化，则剩下的区间长度一定是`最长的`），使得其满足区间和等于$sum-x$，我们利用上述模版即可
+
+```java
+public class Solution {
+    public int minOperations(int[] nums, int x) {
+        int total = Arrays.stream(nums).sum();
+        int target = total - x;  // 将问题转化为区间和为target的最大长度
+        if (target < 0) {  // 题干数组元素都为正 故一定无解 
+            return -1;
+        }
+        int n = nums.length;
+        int res = -1;  // 不存在答案
+        for(int l = 0, r = 0, sum_val = 0;r<n;r++) {  // 定义左指针、右指针、区间和
+            sum_val += nums[r];
+            while (sum_val > target) {
+                sum_val -= nums[l];
+                l++;
+            }
+            if (sum_val == target) {  // 更新最长值
+                res = Math.max(res, r - l + 1);
+            }
+        }
+        if (res == -1) {
+            return res;
+        }
+        return n - res;
+    }
+}
+```
+
+### 3.2.3. 一般的`最短的`长度
+
+#### 3.2.3.1. <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/">209. 长度最小的子数组 - 力扣（LeetCode）</a>
