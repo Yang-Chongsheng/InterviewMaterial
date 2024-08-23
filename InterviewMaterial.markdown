@@ -1,27 +1,36 @@
-- [1. Glossary](#1-glossary)
-- [2. 面试杂题](#2-面试杂题)
-  - [2.1. hello world](#21-hello-world)
-- [3. 双指针](#3-双指针)
-  - [3.1. 定长滑动窗口](#31-定长滑动窗口)
-    - [3.1.1. 偶数子串](#311-偶数子串)
-  - [3.2. 不定长滑动窗口](#32-不定长滑动窗口)
-    - [3.2.1. 最长上升子数组](#321-最长上升子数组)
-      - [3.2.1.1. 骑车路线原题🔗（最长上升子数组）](#3211-骑车路线原题最长上升子数组)
-    - [3.2.2. 一般的`最长的`长度](#322-一般的最长的长度)
-      - [3.2.2.1. 1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](#3221-1493-删掉一个元素以后全为-1-的最长子数组---力扣leetcode)
-      - [3.2.2.2. 最长彩带-内推鸭](#3222-最长彩带-内推鸭)
-      - [3.2.2.3. 904. 水果成篮 - 力扣（LeetCode）](#3223-904-水果成篮---力扣leetcode)
-      - [3.2.2.4. 1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）](#3224-1658-将-x-减到-0-的最小操作数---力扣leetcode)
-    - [3.2.3. 一般的`最短的`长度](#323-一般的最短的长度)
-      - [3.2.3.1. 209. 长度最小的子数组 - 力扣（LeetCode）](#3231-209-长度最小的子数组---力扣leetcode)
+- [1. 把笔试基础班变厚](#1-把笔试基础班变厚)
+- [2. Glossary](#2-glossary)
+- [3. 面试题](#3-面试题)
+  - [3.1. hello world](#31-hello-world)
+  - [3.2. 快排与快速选择](#32-快排与快速选择)
+- [4. 双指针(滑动窗口 数组大于零 存在单调性)](#4-双指针滑动窗口-数组大于零-存在单调性)
+  - [4.1. 定长滑动窗口](#41-定长滑动窗口)
+    - [4.1.1. 偶数子串](#411-偶数子串)
+  - [4.2. 不定长滑动窗口](#42-不定长滑动窗口)
+    - [4.2.1. 最长上升子数组](#421-最长上升子数组)
+      - [4.2.1.1. 骑车路线原题🔗（最长上升子数组）](#4211-骑车路线原题最长上升子数组)
+    - [4.2.2. 一般的`最长的`长度](#422-一般的最长的长度)
+      - [4.2.2.1. 1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](#4221-1493-删掉一个元素以后全为-1-的最长子数组---力扣leetcode)
+      - [4.2.2.2. 最长彩带-内推鸭](#4222-最长彩带-内推鸭)
+      - [4.2.2.3. 904. 水果成篮 - 力扣（LeetCode）](#4223-904-水果成篮---力扣leetcode)
+      - [4.2.2.4. 1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）](#4224-1658-将-x-减到-0-的最小操作数---力扣leetcode)
+    - [4.2.3. 一般的`最短的`长度](#423-一般的最短的长度)
+      - [4.2.3.1. 209. 长度最小的子数组 - 力扣（LeetCode）](#4231-209-长度最小的子数组---力扣leetcode)
 
 依托于wiki，还有dchat的`我群`来准备面试话术和资料 争取能够打印出来
 
 周末系统学习一下Juc
 
-<img alt="picture 5" src="images/pic_1724304399656.png" width="300" />  
+<img alt="picture 5" src="images/pic_1724304399656.png" width="300" /> 
 
-# 1. Glossary
+# 1. 把笔试基础班变厚
+
+- [ ] 1期 完成题目迁移
+- [ ] 2期 完善代码 格式等 与布局
+- [ ] 3期 刷题
+
+
+# 2. Glossary
 
 子串 == 子数组
 
@@ -32,9 +41,9 @@
 > $2^n$ 量级
 
 
-# 2. 面试杂题
+# 3. 面试题
 
-## 2.1. hello world
+## 3.1. hello world
 
 ```Java
 public class Main{
@@ -43,6 +52,8 @@ public class Main{
     }
 }
 ```
+
+## 3.2. 快排与快速选择
 
 ```cpp
 //快排
@@ -125,11 +136,11 @@ int main()
 ```
 
 
-# 3. 双指针
+# 4. 双指针(滑动窗口 数组大于零 存在单调性)
 
-## 3.1. 定长滑动窗口
+## 4.1. 定长滑动窗口
 
-### 3.1.1. 偶数子串
+### 4.1.1. 偶数子串
 
 ```java
 import java.util.*;
@@ -175,9 +186,9 @@ public class Main {
 }
 ```
 
-## 3.2. 不定长滑动窗口
+## 4.2. 不定长滑动窗口
 
-### 3.2.1. 最长上升子数组
+### 4.2.1. 最长上升子数组
 ```java
 import java.util.Scanner;
 
@@ -205,18 +216,20 @@ public class Main {
 }
 ```
 
-#### 3.2.1.1. 骑车路线[原题🔗](https://www.sspnote.com/oj/3/318)[（最长上升子数组）](#321-最长上升子数组)
+#### 4.2.1.1. 骑车路线[原题🔗](https://www.sspnote.com/oj/3/318)[（最长上升子数组）](#321-最长上升子数组)
 
-### 3.2.2. 一般的`最长的`长度
+### 4.2.2. 一般的`最长的`长度
 
-#### 3.2.2.1. [1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/description/)
+> $r$指针先移动，移动到某一个区间，不满足条件的时候（比如题目要求区间和不大于某一个正整数，或者区间中元素$x$的个数$\le k$），$l$指针右移，直到满足条件。
+
+#### 4.2.2.1. [1493. 删掉一个元素以后全为 1 的最长子数组 - 力扣（LeetCode）](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/description/)
 
 ```java
 class Solution {
     public int longestSubarray(int[] nums) {
         int res = 0, n = nums.length;
         int sum = 0;
-        for (int r = 0,l=0; r < n; r++) {
+        for (int l=0,r = 0; r < n; r++) {
             sum += nums[r];
             while (sum < r - l) {
                 sum -= nums[l++];
@@ -231,7 +244,7 @@ class Solution {
 
 找序列和为长度-1的`最长的`串
 
-#### 3.2.2.2. [最长彩带-内推鸭](https://www.sspnote.com/oj/3/337)
+#### 4.2.2.2. [最长彩带-内推鸭](https://www.sspnote.com/oj/3/337)
 
 ```java
 import java.util.HashMap;
@@ -258,7 +271,6 @@ public class Main {
         // 使用滑动窗口寻找满足条件的最长子数组
         for (int l = 0, r = 0; r < n; r++) {
             cnts.put(a[r], cnts.getOrDefault(a[r], 0) + 1);
-
             // 当前区间不满足条件
             while (cnts.size() > k) {
                 cnts.put(a[l], cnts.get(a[l]) - 1);
@@ -267,7 +279,6 @@ public class Main {
                 }
                 l++;
             }
-
             res = Math.max(res, r - l + 1); // 更新最大长度
         }
 
@@ -276,9 +287,9 @@ public class Main {
 }
 ```
 
-#### 3.2.2.3. <a href="https://leetcode.cn/problems/fruit-into-baskets/description/">904. 水果成篮 - 力扣（LeetCode）</a>
+#### 4.2.2.3. <a href="https://leetcode.cn/problems/fruit-into-baskets/description/">904. 水果成篮 - 力扣（LeetCode）</a>
 
-#### 3.2.2.4. <a href="https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/">1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）</a>
+#### 4.2.2.4. <a href="https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/">1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）</a>
 
 > 求一个`最长的`连续区间（因为要使得删除的元素最小化，则剩下的区间长度一定是`最长的`），使得其满足区间和等于$sum-x$，我们利用上述模版即可
 
@@ -310,6 +321,27 @@ public class Solution {
 }
 ```
 
-### 3.2.3. 一般的`最短的`长度
+### 4.2.3. 一般的`最短的`长度
 
-#### 3.2.3.1. <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/">209. 长度最小的子数组 - 力扣（LeetCode）</a>
+> $r$指针先移动，移动到某一个区间，满足条件的时候（比如题目要求区间和大于某一个正整数，或者区间中元素$x$的个数$\ge k$），$l$指针右移，直到不满足条件。
+
+#### 4.2.3.1. <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/">209. 长度最小的子数组 - 力扣（LeetCode）</a>
+
+```java
+public class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int res = Integer.MAX_VALUE;  // 初始化结果为最大整数
+        int sum = 0;  // 定义双指针l,r,区间和sum
+        for (int l = 0, r = 0; r < n; r++) {  // 右指针向右移动
+            sum += nums[r];
+            while (sum >= target) {  // 当前区间满足条件，更新最小值
+                res = Math.min(res, r - l + 1);
+                sum -= nums[l];
+                l++;  // 左指针向右移动
+            }
+        }
+        return (res == Integer.MAX_VALUE) ? 0 : res;  // 如果结果仍为最大整数，说明没有满足条件的子数组，返回0
+    }
+}
+```
