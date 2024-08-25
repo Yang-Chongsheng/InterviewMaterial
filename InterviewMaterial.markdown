@@ -1,5 +1,6 @@
 - [1. 把笔试基础班变厚](#1-把笔试基础班变厚)
 - [2. Glossary](#2-glossary)
+  - [2.1. 快读](#21-快读)
 - [3. 面试题](#3-面试题)
   - [3.1. hello world](#31-hello-world)
   - [3.2. 快排与快速选择](#32-快排与快速选择)
@@ -16,6 +17,13 @@
       - [4.2.2.4. 1658. 将 x 减到 0 的最小操作数 - 力扣（LeetCode）](#4224-1658-将-x-减到-0-的最小操作数---力扣leetcode)
     - [4.2.3. 一般的`最短的`长度](#423-一般的最短的长度)
       - [4.2.3.1. 209. 长度最小的子数组 - 力扣（LeetCode）](#4231-209-长度最小的子数组---力扣leetcode)
+      - [4.2.3.2. 三值字符串-内推鸭](#4232-三值字符串-内推鸭)
+      - [4.2.3.3. K0序列-内推鸭](#4233-k0序列-内推鸭)
+    - [4.2.4. 求方案数](#424-求方案数)
+      - [4.2.4.1. 713. 乘积小于 K 的子数组 - 力扣（LeetCode）](#4241-713-乘积小于-k-的子数组---力扣leetcode)
+      - [4.2.4.2. 2302. 统计得分小于 K 的子数组数目 - 力扣（LeetCode）](#4242-2302-统计得分小于-k-的子数组数目---力扣leetcode)
+      - [4.2.4.3. 删除子数组-内推鸭](#4243-删除子数组-内推鸭)
+- [5.](#5)
 
 依托于wiki，还有dchat的`我群`来准备面试话术和资料 争取能够打印出来
 
@@ -40,6 +48,75 @@
 
 > $2^n$ 量级
 
+## 2.1. 快读
+
+```java
+import java.io.*;
+import java.util.StringTokenizer;
+// 注意类名必须为Main
+class Main {
+    public static void main(String[] args) {
+        FastReader sc = new FastReader();
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        out.println(a + b);
+        // 最后记得flush，不然会没有输出
+        out.flush();
+    }
+}
+// 下面是快读模板。需要使用时直接贴在下面就好了
+class FastReader {
+    //不用写构造函数，默认自带无参构造函数
+    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer st;
+    
+    String next(){
+        while (st==null||!st.hasMoreElements()){
+            try {
+                st=new StringTokenizer(br.readLine());
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        return st.nextToken();
+    }
+    
+    int nextInt() {
+        return Integer.parseInt(next());
+    }
+    
+    long nextLong() {
+        return Long.parseLong(next());
+    }
+    
+    double nextDouble() {
+        return Double.parseDouble(next());
+    }
+    
+    //下面两个用才加
+    String nextLine() {
+        String line = null;
+        try {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return line;
+    }
+    
+    boolean hasNext() {
+        while (st == null || !st.hasMoreElements()) {
+            String line = nextLine();
+            if (line == null) {
+                return false;
+            }
+            st = new StringTokenizer(line);
+        }
+        return true;
+    }
+}
+```
 
 # 3. 面试题
 
@@ -345,3 +422,181 @@ public class Solution {
     }
 }
 ```
+
+#### 4.2.3.2. <a href="https://www.sspnote.com/oj/3/319">三值字符串-内推鸭</a>
+
+```java
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int T = scanner.nextInt();
+        while (T-- > 0) {
+            solve(scanner);
+        }
+    }
+
+    public static void solve(Scanner scanner) {
+        String s = scanner.next();
+        int n = s.length();
+        int[] cnts = new int[3];  // 分别统计1,2,3字符的个数
+        int res = n + 1;  // 初始化最小值
+        for (int l = 0, r = 0; r < n; r++) {
+            cnts[s.charAt(r) - '1']++;
+            while (cnts[0] > 0 && cnts[1] > 0 && cnts[2] > 0) {  // 区间同时包含字符1,2,3
+                res = Math.min(res, r - l + 1);
+                cnts[s.charAt(l) - '1']--;
+                l++;
+            }
+        }
+        if (res == n + 1) {
+            System.out.println("0");
+        } else {
+            System.out.println(res);
+        }
+    }
+}
+```
+
+#### 4.2.3.3. <a href="https://www.sspnote.com/oj/3/305">K0序列-内推鸭</a>
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    static final int N = (int)1e5+10;
+    static int[] a = new int[N], w = new int[N];
+    static int n, k;
+
+    // 计算x转为2进制后末尾0的个数
+    static int calc(int x) {
+        int res = 0;
+        while (x % 2 == 0) {
+            res++;
+            x /= 2;
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        n = in.nextInt();
+        k = in.nextInt();
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextInt();
+            w[i] = calc(a[i]);
+        }
+        int res = n + 1;  // 求最小长度
+        for (int l = 0, r = 0, total = 0; r < n; r++) {
+            total += w[r];
+            while (total >= k) {
+                res = Math.min(res, r - l + 1);
+                total -= w[l];
+                l++;
+            }
+        }
+        if (res == n + 1) System.out.println("-1");
+        else System.out.println(res);
+    }
+}
+```
+### 4.2.4. 求方案数
+
+
+####  4.2.4.1. <a href="https://leetcode.cn/problems/subarray-product-less-than-k/description/">713. 乘积小于 K 的子数组 - 力扣（LeetCode）</a>
+
+```java
+// 根据右端点不同 控制生成子数组的不同
+public class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int n = nums.length, res = 0;
+        //if (k <= 1) return 0;
+        int total = 1;
+        for (int l = 0, r = 0; r < n; r++) {
+            total *= nums[r];
+            while (l<=r && total >= k) {   // 当前区间不满足条件，l左移
+                total /= nums[l];
+                l++;
+            }
+            res += r - l + 1;  // [l,r]区间有r-l+1个子区间都满足题意
+        }
+        return res;
+    }
+}
+```
+
+#### 4.2.4.2. <a href="https://leetcode.cn/problems/count-subarrays-with-score-less-than-k/">2302. 统计得分小于 K 的子数组数目 - 力扣（LeetCode）</a>
+
+```java
+public class Solution {
+    public long countSubarrays(int[] nums, long k) {
+        long res = 0, sum = 0;
+        int n = nums.length;
+        for (int l = 0, r = 0; r < n; r++) {
+            sum += nums[r];
+            while (l<=r && sum * (r - l + 1) >= k) {  // 当前区间不满足条件,l指针右移
+                sum -= nums[l];
+                l++;
+            }
+            res += r - l + 1;
+        }
+        return res;
+    }
+}
+```
+
+#### 4.2.4.3. <a href="https://www.sspnote.com/oj/3/4">删除子数组-内推鸭</a>
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+
+        // 统计a[i]的因子2的数量
+        int[] a2 = new int[n];
+        // 统计a[i]的因子5的数量
+        int[] a5 = new int[n];
+
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = scanner.nextInt();
+            // 计算每个数的因子2和因子5的数量
+            while (a[i] % 2 == 0) {
+                a[i] /= 2;
+                a2[i]++;
+            }
+            while (a[i] % 5 == 0) {
+                a[i] /= 5;
+                a5[i]++;
+            }
+        }
+
+        int cnt2 = Arrays.stream(a2).sum();  // 因子2的总数量
+        int cnt5 = Arrays.stream(a5).sum();  // 因子5的总数量
+
+        
+        long ans = 0;
+
+        // 使用滑动窗口计算满足条件的子数组数量
+        for (int left = 0,right = 0; right < n; right++) {
+            cnt2 -= a2[right];
+            cnt5 -= a5[right];
+            // 当前区间不满足条件（因子2和因子5的数量都小于k）
+            while (left <= right && Math.min(cnt2, cnt5) < k) {
+                cnt2 += a2[left];  // 移动左指针，增加因子2的数量
+                cnt5 += a5[left];  // 移动左指针，增加因子5的数量
+                left++;
+            }
+            ans += right - left + 1;
+        }
+
+        System.out.println(ans);
+    }
+}
+```
+
+# 5. 
