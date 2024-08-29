@@ -4,6 +4,10 @@
 - [3. 面试题](#3-面试题)
   - [3.1. hello world](#31-hello-world)
   - [3.2. 快排与快速选择](#32-快排与快速选择)
+  - [3.3. 写一个函数将 ipv4 地址字符串 (仅包含数字，点，空格) 转化成 32 位整数。另外，数字和点之间的空格是合法的，其他情况均为非法地址，要求输出合法地址的 32 位整型结果](#33-写一个函数将-ipv4-地址字符串-仅包含数字点空格-转化成-32-位整数另外数字和点之间的空格是合法的其他情况均为非法地址要求输出合法地址的-32-位整型结果)
+  - [3.4. 斐波那契数列 考察点：递归、非递归写法；时间复杂度计算](#34-斐波那契数列-考察点递归非递归写法时间复杂度计算)
+  - [3.5. 基于 UDP 实现可靠的传输协议](#35-基于-udp-实现可靠的传输协议)
+  - [3.6. 读文件](#36-读文件)
 - [4. 双指针(滑动窗口 数组大于零 存在单调性)](#4-双指针滑动窗口-数组大于零-存在单调性)
   - [4.1. 定长滑动窗口](#41-定长滑动窗口)
     - [4.1.1. 偶数子串](#411-偶数子串)
@@ -36,7 +40,50 @@
 - [ ] 1期 完成题目迁移
 - [ ] 2期 完善代码 格式等 与布局
 - [ ] 3期 刷题
-
+> 推荐书籍
+由 谈明亮创建, 最后修改于一月 17, 2020<br>
+架构<br>
+数据密集型应用系统设计 9.6 https://book.douban.com/subject/30329536/
+系统架构 9.1 https://book.douban.com/subject/26938710/
+架构整洁之道 8.7 https://book.douban.com/subject/30333919/
+演进式架构 7.2 https://book.douban.com/subject/34793521/
+<br>微服务<br>
+微服务设计 8.2 https://book.douban.com/subject/26772677/
+微服务架构设计模式 9.1 https://book.douban.com/subject/33425123/
+生产微服务 8.0 https://book.douban.com/subject/27127050/
+<br>混沌工程<br>
+混沌工程：Netflix系统稳定性之道 6.6 https://book.douban.com/subject/34466272/
+<br>容器编排<br>
+Kubernetes in Action中文版 9.3 https://book.douban.com/subject/30418855/
+深入浅出 Docker 8.2 https://book.douban.com/subject/30486354/
+Service Mesh 目前没有特别好的书推荐
+<br>DevOps<br>
+DevOps实践指南 8.5 https://book.douban.com/subject/30186150/
+SRE：Google运维解密 9.0 https://book.douban.com/subject/26875239/
+<br>编码<br>
+编写可读代码的艺术 8.7 https://book.douban.com/subject/10797189/
+重构第二版 9.5 https://book.douban.com/subject/30468597/
+代码整洁之道 8.6 https://book.douban.com/subject/4199741/
+<br>PHP 内核<br>
+PHP7内核剖析 8.1 https://book.douban.com/subject/27197032/
+<br>Go<br>
+Go程序设计语言 8.8 https://book.douban.com/subject/27044219/
+Go Web 编程 8.2 https://book.douban.com/subject/27204133/
+Go语言高级编程 8.8 https://book.douban.com/subject/34442131/
+<br>安全<br>
+图解密码技术 9.1 https://book.douban.com/subject/26265544/
+<br>HTTP<br>
+HTTP权威指南 8.6 https://book.douban.com/subject/10746113/
+HTTP/2基础教程 7.2 https://book.douban.com/subject/27665112/
+<br>底层<br>
+C 程序设计语言 9.4分 https://book.douban.com/subject/1139336/
+UNIX环境高级编程 9.6分 https://book.douban.com/subject/25900403/
+UNIX网络编程 卷1：套接字联网API 9.2分 https://book.douban.com/subject/26434583/
+C 语言程序设计 9.3分 https://book.douban.com/subject/4279678/
+C语言接口与实现 9.0 https://book.douban.com/subject/6801697/
+Linux/UNIX系统编程手册 9.2分 https://book.douban.com/subject/25809330/
+数据结构与算法分析 8.9 https://book.douban.com/subject/1139426/
+深入理解计算机系统 9.9 https://book.douban.com/subject/26912767/
 
 # 2. Glossary
 
@@ -212,6 +259,16 @@ int main()
 }
 ```
 
+## 3.3. 写一个函数将 ipv4 地址字符串 (仅包含数字，点，空格) 转化成 32 位整数。另外，数字和点之间的空格是合法的，其他情况均为非法地址，要求输出合法地址的 32 位整型结果
+
+## 3.4. 斐波那契数列 考察点：递归、非递归写法；时间复杂度计算
+
+## 3.5. 基于 UDP 实现可靠的传输协议
+提示：参考 TCP
+
+## 3.6. 读文件
+有一段从磁盘读取文件程序。详细描述从代码编写完毕，到文件读到内存中的过程。尽量给出你知道的所有细节
+提示：编译、进程管理、lib 库、系统 API、文件系统、IO 操作(磁盘结构等) 等
 
 # 4. 双指针(滑动窗口 数组大于零 存在单调性)
 
