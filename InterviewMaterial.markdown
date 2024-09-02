@@ -27,7 +27,12 @@
       - [4.2.4.1. 713. 乘积小于 K 的子数组 - 力扣（LeetCode）](#4241-713-乘积小于-k-的子数组---力扣leetcode)
       - [4.2.4.2. 2302. 统计得分小于 K 的子数组数目 - 力扣（LeetCode）](#4242-2302-统计得分小于-k-的子数组数目---力扣leetcode)
       - [4.2.4.3. 删除子数组-内推鸭](#4243-删除子数组-内推鸭)
-- [5.](#5)
+- [5. 前缀和](#5-前缀和)
+  - [5.1. 相等数-内推鸭](#51-相等数-内推鸭)
+  - [5.2. 最大加权矩形-内推鸭](#52-最大加权矩形-内推鸭)
+  - [5.3. 领地选择-内推鸭](#53-领地选择-内推鸭)
+  - [5.4. 矩阵查询-内推鸭](#54-矩阵查询-内推鸭)
+  - [5.5. 魔法师-内推鸭](#55-魔法师-内推鸭)
 
 依托于wiki，还有dchat的`我群`来准备面试话术和资料 争取能够打印出来
 
@@ -137,6 +142,10 @@ public class Main{
 
 ```cpp
 //快排
+// 3333 交换两次
+// 4321 第一层， 12 _ 3划分了 _ 4 
+// i指向3，j指向2，故交换前需要if
+// 第二层的两部分为 l->j j+1
 #include <iostream>
 
 using namespace std;
@@ -612,4 +621,202 @@ public class Main {
 }
 ```
 
-# 5. 
+# 5. 前缀和
+
+## 5.1. <a href="https://www.sspnote.com/oj/3/215">相等数-内推鸭</a>
+
+```java
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static int N = (int)1e5+10;
+    static Integer[] a = new Integer[N];
+    static Integer[] p = new Integer[N]; //排序后下标
+    static long[] s = new long[N];
+    static long[] res = new long[N];
+    static int n;
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        String[] input = br.readLine().split(" ");
+        for(int i = 1; i <= n; i++) {
+            a[i] = Integer.parseInt(input[i-1]);
+            // 初始化数组p，使p[i]等于i
+            p[i] = i;
+        }
+        // 对数组p进行排序，排序的依据是数组a的值
+        Arrays.sort(p, 1, n+1, (x, y) -> a[x] - a[y]);
+        // 计算数组a的前缀和，并存入数组s
+        for(int i = 1; i <= n; i++) {
+            s[i] = s[i-1] + a[p[i]];
+        }
+        long pre = 0;
+        for(int i = 1; i <= n; i++) {
+            // 计算比a[p[i]]小的元素数量和比a[p[i]]大的元素数量
+            int lft = i - 1;
+            int rgt = n - i;
+            int x = a[p[i]];
+            // 计算比a[p[i]]小的数字的和和比a[p[i]]大的数字的和
+            long cnt = 1L * x * lft - s[i-1] + (s[n] - s[i] - 1L * x * rgt);
+            // 将结果存入数组res
+            res[p[i]] = cnt;
+        }
+        for(int i = 1; i <= n; i++) {
+            System.out.println(res[i]);
+        }
+    }
+}
+```
+
+## 5.2. <a href="https://www.sspnote.com/oj/3/16">最大加权矩形-内推鸭</a>
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[][] a = new int[n + 1][n + 1];
+        int[][] s = new int[n + 1][n + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                a[i][j] = scanner.nextInt();
+                s[i][j] = s[i][j - 1] + s[i - 1][j] - s[i - 1][j - 1] + a[i][j];  // 预处理二维前缀和
+            }
+        }
+        int res = Integer.MIN_VALUE;
+        for (int x1 = 1; x1 <= n; x1++) {  // 枚举所有的子矩阵
+            for (int y1 = 1; y1 <= n; y1++) {
+                for (int x2 = x1; x2 <= n; x2++) {
+                    for (int y2 = y1; y2 <= n; y2++) {
+                        int sum = s[x2][y2] - s[x2][y1 - 1] - s[x1 - 1][y2] + s[x1 - 1][y1 - 1];
+                        res = Math.max(res, sum);
+                    }
+                }
+            }
+        }
+        System.out.println(res);
+    }
+}
+```
+
+## 5.3. <a href="https://www.sspnote.com/oj/3/17">领地选择-内推鸭</a>
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        int c = scanner.nextInt();
+        int num;
+        int[][] s = new int[n + 2][m + 2];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                num = scanner.nextInt();
+                s[i][j] = s[i][j - 1] + s[i - 1][j] - s[i - 1][j - 1] + num;  // 预处理二维前缀和
+            }
+        }
+        int res = Integer.MIN_VALUE;
+        int x = -1, y = -1;
+        for (int x1 = 1; x1 <= n + 1 - c; x1++) {  // 枚举所有的子矩阵
+            for (int y1 = 1; y1 <= m + 1 - c; y1++) {
+                int x2 = x1 + c - 1, y2 = y1 + c - 1;
+                int total = s[x2][y2] - s[x2][y1 - 1] - s[x1 - 1][y2] + s[x1 - 1][y1 - 1];
+                if (total > res) {  // 更新最大值，并更新矩形左上角坐标
+                    x = x1;
+                    y = y1;
+                    res = total;
+                }
+            }
+        }
+        System.out.println(x + " " + y);
+    }
+}
+
+```
+
+## 5.4. <a href="https://www.sspnote.com/oj/3/7">矩阵查询-内推鸭</a>
+
+```java
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        int[][][] a = new int[3][505][505];
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                String x = scanner.next();
+                for (int k = 0; k < 3; k++) {
+                    a[k][i][j] = a[k][i - 1][j] + a[k][i][j - 1] - a[k][i - 1][j - 1]; // 二维前缀和转移
+                }
+                if (x.equals("x")) {
+                    a[0][i][j]++;
+                } else if (x.equals("y")) {
+                    a[1][i][j]++;
+                } else {
+                    a[2][i][j]++;
+                }
+            }
+        }
+
+        int q = scanner.nextInt();
+        while (q-- > 0) {
+            int x1 = scanner.nextInt();
+            int y1 = scanner.nextInt();
+            int x2 = scanner.nextInt();
+            int y2 = scanner.nextInt();
+            int res = 0;
+            for (int i = 0; i < 3; i++) { // 查询 x, y, z 是否出现
+                if(get(a, i, x1, y1, x2, y2)>0){
+                    res+=1;
+                }
+            }
+            System.out.println(res);
+        }
+    }
+
+    private static int get(int[][][] a, int id, int x1, int y1, int x2, int y2) {
+        return a[id][x2][y2] - a[id][x1 - 1][y2] - a[id][x2][y1 - 1] + a[id][x1 - 1][y1 - 1]; // 只要id这个字符串它在子矩阵中出现至少一次，那就算一次答案。
+    }
+}
+```
+
+## 5.5. <a href="https://www.sspnote.com/oj/3/9">魔法师-内推鸭</a>
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] a = new int[n + 1];
+        for (int i = 1; i <= n; i++) {  // 将a[i]表示为第i个数字是否为负数(a[i]=1说明第i个数是负数)
+            a[i] = scanner.nextInt();
+            if (a[i] > 0) a[i] = 0;
+            else a[i] = 1;
+        }
+        long total = 1L * n * (n + 1) / 2;  // 总的子数组个数
+        Map<Integer, Integer> cnts = new HashMap<>();  // 记录前缀和区间的负数个数的奇偶性
+        cnts.put(0, 1);  // 初始没有任何数，可以视为有0个负数，因此cnts[0]=1
+        long white = 0;  // 统计子数组内负数个数为偶数的区间数
+        for (int i = 1, s = 0; i <= n; i++) {
+            s = (s + a[i]) % 2;
+            if (cnts.containsKey(s)) {
+                white += cnts.get(s);
+            }
+            cnts.put(s, cnts.getOrDefault(s, 0) + 1);
+        }
+        System.out.println((total - white) + " " + white);
+    }
+}
+```
